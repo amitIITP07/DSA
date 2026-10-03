@@ -1,17 +1,27 @@
 class Solution(object):
     def subsets(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: List[List[int]]
-        """
-        n = len(nums)
-        total_subsets = 1<<n
-        result = []
-        for num in range (0,total_subsets):
-            lst = []
-            for i in range(0,n):
-                if num & (1<<i) !=0 :
 
-                    lst.append(nums[i])
-            result.append(lst)
-        return result 
+        result = []
+        subset = []
+
+        def function(index):
+
+            # Base case
+            if index >= len(nums):
+                result.append(subset[:])
+                return
+
+            # Take
+            subset.append(nums[index])
+            function(index + 1)
+
+            # Undo
+            subset.pop()
+
+            # Don't take
+            function(index + 1)
+
+        function(0)
+
+        return result
+        
