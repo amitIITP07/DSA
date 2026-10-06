@@ -1,0 +1,28 @@
+class Solution(object):
+
+    def combinationSum3(self, k, n):
+
+        result = []
+
+        def solve(last, total, subset):
+
+            if total == n and len(subset) == k:
+                result.append(subset[:])
+                return
+
+            if total > n or len(subset) > k:
+                return
+
+            for i in range(last, 10):
+
+                sum = total + i
+
+                subset.append(i)
+
+                solve(i + 1, sum, subset)
+
+                subset.pop()
+
+        solve(1, 0, [])
+
+        return result  
