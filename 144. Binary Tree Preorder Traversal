@@ -1,0 +1,34 @@
+class Solution:
+    def preorderTraversal(self, root):
+
+        result = []
+        current = root
+
+        while current is not None:
+
+            # Case 1: Current has no left child
+            if current.left is None:
+                result.append(current.val)
+                current = current.right
+
+            else:
+                # Find inorder predecessor
+                predecessor = current.left
+
+                while (predecessor.right is not None and
+                       predecessor.right != current):
+
+                    predecessor = predecessor.right
+
+                # First visit
+                if predecessor.right is None:
+                    result.append(current.val)
+                    predecessor.right = current
+                    current = current.left
+
+                else:
+                    # Remove temporary link
+                    predecessor.right = None
+                    current = current.right
+
+        return result
